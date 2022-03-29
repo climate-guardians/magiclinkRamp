@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { magic, web3 } from '../magic';
-import { abi } from '../contract/abi.js';
+import { abi } from '../abis/abi.js';
+import { abiPack } from '../abis/abiPack.js';
 import Loading from './Loading';
 import ContractCall from './ContractCall';
 import SendTransaction from './SendTransaction';
@@ -11,8 +12,9 @@ import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
 export default function Home() {
   const [userMetadata, setUserMetadata] = useState();
   const [balance, setBalance] = useState('...');
-  const contractAddress = '0xe908B2756699876267B02A5cFCf1C7363834909a';
-  const contract = new web3.eth.Contract(abi, contractAddress);
+  const contractAddress = '0x9EdE07d43B4514adA6835B1c30151ac5ef8df9A9';
+  // const hero = new web3.eth.Contract(abi, contractAddress);
+  const packContract = new web3.eth.Contract(abiPack, contractAddress);
   const history = useHistory();
 
   const buyFunds = (address) => { 
@@ -47,7 +49,6 @@ export default function Home() {
         magic.user.getMetadata().then(user => {
           setUserMetadata(user);
           fetchBalance(user.publicAddress);
-          mintNFT(user.publicAddress);
         });
       } else {
         // If no user is logged in, redirect to `/login`
@@ -60,15 +61,15 @@ export default function Home() {
     web3.eth.getBalance(address).then(bal => setBalance(web3.utils.fromWei(bal)))
   }
 
-  const mintNFT = (useraddress) => contract.methods.safeMint(useraddress).call();
-
   return (
     userMetadata ? (
       <>
         <Info balance={balance} user={userMetadata} magic={magic} />
+        <div className='container'>
         <button onClick={buyFunds}>Run Ramp Widget </button>
+        </div>
         <SendTransaction web3={web3} user={userMetadata} fetchBalance={fetchBalance} />
-        <ContractCall contract={contract} user={userMetadata} fetchBalance={fetchBalance} message={0} fetchContractMessage={0} />  
+        <ContractCall contract={packContract} user={userMetadata} fetchBalance={fetchBalance} message={0} fetchContractMessage={0} />  
       </>
     ) : <Loading />
   );
