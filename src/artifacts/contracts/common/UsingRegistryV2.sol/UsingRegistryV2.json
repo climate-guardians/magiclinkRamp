@@ -1,0 +1,24 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "UsingRegistryV2",
+  "sourceName": "contracts/common/UsingRegistryV2.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "registry",
+      "outputs": [
+        {
+          "internalType": "contract IRegistry",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b5060948061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80637b10399914602d575b600080fd5b603561ce1081565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f3fea2646970667358221220977a3d5dcb07618a6dd185780c34d1aae12877346debaa35cdb2c15dd2cf4b7664736f6c63430008070033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80637b10399914602d575b600080fd5b603561ce1081565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f3fea2646970667358221220977a3d5dcb07618a6dd185780c34d1aae12877346debaa35cdb2c15dd2cf4b7664736f6c63430008070033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

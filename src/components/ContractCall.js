@@ -1,18 +1,20 @@
 import React, { useState, useRef } from 'react';
 
-export default function ContractCall({ user, fetchBalance, contract, message, fetchContractMessage }) {
+export default function ContractCall({ web3, user, fetchBalance, contract, message, fetchContractMessage }) {
   const [txnHash, setTxnHash] = useState();
   const [txnHashPack, setTxnHashPack] = useState();
   const updateBtnRef = useRef();
 
   // Update contract `message` value on the blockchain
   const mint = async () => {
-    let { transactionHash } = await contract.methods.mint(user.publicAddress, 2, 1, 0x0000).send({ from: user.publicAddress , value: "0x2386f26fc10000"});
+    let gasPrice = await web3.eth.getGasPrice();
+    let { transactionHash } = await contract.methods.mint(1, "0x0000").send({ from: user.publicAddress , value: "0x5AF3107A4000", gasLimit: "0x1000000", gasPrice: gasPrice});
     setTxnHash(transactionHash)
   }
 
   const openPack = async () => {
-    let { transactionHash } = await contract.methods.openPack(user.publicAddress, 2, 1, '0x4aEc1eF9b891C6EbB63634a97760e4107dcA28E6', '0xe7857a1691600C8b3D7e6dAC95dc4DAF65e1c8fc', '0x10BbEd3B0f93690A503366A0325FCad8Ac487cbE').send({ from: user.publicAddress});
+    let gasPrice = await web3.eth.getGasPrice();
+    let { transactionHash } = await contract.methods.openPack(0, 1).send({  from: user.publicAddress, gasLimit: "0x3D090", gasPrice: gasPrice});
     setTxnHashPack(transactionHash)
   }
 
@@ -30,7 +32,7 @@ export default function ContractCall({ user, fetchBalance, contract, message, fe
           <button ref={updateBtnRef} onClick={openPack}>Open Pack</button>
           {txnHashPack &&
             <div className='info'>
-              <a href={`https://alfajores-blockscout.celo-testnet.org/tx/${txnHash}`} target='_blank'>
+              <a href={`https://alfajores-blockscout.celo-testnet.org/tx/${txnHashPack}`} target='_blank'>
                 View Transaction
               </a> ↗️
             </div>}
